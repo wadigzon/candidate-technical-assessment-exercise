@@ -8,10 +8,10 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.gaggle</groupId>
-	<artifactId>tech-assessment</artifactId>
+	<groupId>com.gaggle.tech-assessment</groupId>
+	<artifactId>contacts-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tech-assessment</name>
+	<name>contacts-api</name>
 	<description>Technical Assessment for Gaggle</description>
 	<properties>
 		<java.version>11</java.version>

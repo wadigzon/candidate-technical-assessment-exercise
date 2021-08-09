@@ -1,13 +1,13 @@
-package com.gaggle.techassessment;
+package com.gaggle.techassessment.contactsapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TechAssessmentApplication {
+public class ContactsApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TechAssessmentApplication.class, args);
+		SpringApplication.run(ContactsApiApplication.class, args);
 	}
 
 }
