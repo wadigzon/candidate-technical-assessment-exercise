@@ -1,4 +1,4 @@
-package com.gaggle.techassessment.contactsapi.api;
+package com.gaggle.techassessment.contactsapi.controller;
 
 @SuppressWarnings("serial")
 public class ContactNotFoundException extends RuntimeException {

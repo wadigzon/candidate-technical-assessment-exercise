@@ -1,4 +1,4 @@
-package com.gaggle.techassessment.contactsapi.api;
+package com.gaggle.techassessment.contactsapi.controller;
 
 import java.util.List;
 

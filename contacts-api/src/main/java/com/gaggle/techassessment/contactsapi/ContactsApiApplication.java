@@ -1,4 +1,5 @@
-package com.gaggle.techassessment.contactsapi.api;
+package com.gaggle.techassessment.contactsapi;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
