@@ -3,8 +3,10 @@ package com.gaggle.techassessment.contactsapi.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.StreamingHttpOutputMessage.Body;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,49 +18,63 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaggle.techassessment.contactsapi.model.Contact;
-import com.gaggle.techassessment.contactsapi.repo.ContactRepository;
+import com.gaggle.techassessment.contactsapi.service.ContactService;
 
 @RestController
 @RequestMapping("/api/contacts")
 public class ContactController {
 	@Autowired
-	private ContactRepository contactRepository;
+	private ContactService contactService;
 	
 	@GetMapping
 	public Iterable findAll() {
-		return contactRepository.findAll();
+		return contactService.findAll();
 	}
 	
 	@GetMapping("/name/{contactName}")
-	public List findByName(@PathVariable String contactName) {
-		return contactRepository.findByName(contactName);
+	public List<Contact> findByExactName(@PathVariable String contactName) {
+		return contactService.findByExactName(contactName); 
 	}
 	
 	@GetMapping("/{id}")
 	public Contact findOne(@PathVariable Long id) {
-		return contactRepository.findById(id).orElseThrow();
+		return contactService.findById(id);
 	}
+	
+	@GetMapping("/namesearch/{searchItem}")
+	public List searchByName(@PathVariable String searchItem) {
+		return contactService.searchByName(searchItem);
+	}
+
+    @GetMapping("/count")
+    public Long count() {
+        return contactService.getCount();
+    }	
 
 	@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Contact create(@RequestBody Contact contact) {
-        return contactRepository.save(contact);
+		var list = contactService.findByExactName(contact.getName());
+		// insert only if no records found with that name, 
+		// otherwise return that (existing) record
+        return list.size() == 0 ? contactService.save(contact) : list.get(0);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        contactRepository.findById(id)
-          .orElseThrow();
-        contactRepository.deleteById(id);
+    	var contact = contactService.findById(id);
+    	contactService.deleteById(contact.getId());
     }
 
     @PutMapping("/{id}")
-    public Body updateContact(@RequestBody Contact contact, @PathVariable Long id) {
-        if (contact.getId() != id) {
-          throw new ContactIdMismatchException(null, null);
-        }
-        contactRepository.findById(id)
-          .orElseThrow();
-        return (Body) contactRepository.save(contact);
+    public ResponseEntity<Contact> updateContact(@RequestBody Contact contactDetails, @PathVariable Long id) {
+    	// find that contact
+    	var contact = contactService.findById(id);
+    	// set the new name
+    	contact.setName(contactDetails.getName());
+    	// save it to updated contact
+    	final Contact updatedContact = contactService.save(contact);
+    	// return it
+        return ResponseEntity.ok(updatedContact); 
     }	
 }

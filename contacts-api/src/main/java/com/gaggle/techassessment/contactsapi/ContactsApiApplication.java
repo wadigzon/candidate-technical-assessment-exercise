@@ -10,9 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.gaggle.techassessment.contactsapi.model")
 @SpringBootApplication
 public class ContactsApiApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ContactsApiApplication.class, args);
 	}
-
 }
