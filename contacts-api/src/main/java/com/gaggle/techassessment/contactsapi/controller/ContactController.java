@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.gaggle.techassessment.contactsapi.model.Contact;
 import com.gaggle.techassessment.contactsapi.service.ContactService;
 
 @RestController
+@EnableWebMvc
 @RequestMapping("/api/contacts")
 public class ContactController {
 	@Autowired
@@ -55,6 +57,7 @@ public class ContactController {
     @ResponseStatus(HttpStatus.CREATED)
     public Contact create(@RequestBody Contact contact) {
 		var list = contactService.findByExactName(contact.getName());
+		var count = contactService.getCount();
 		// insert only if no records found with that name, 
 		// otherwise return that (existing) record
         return list.size() == 0 ? contactService.save(contact) : list.get(0);
