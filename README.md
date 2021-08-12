@@ -1,20 +1,39 @@
 # Overview
-This exercise is meant to showcase your technical abilities.
-* Include documentation about your development environment and instructions on how to run your program.
-   * The assignment need only execute from a local machine and there are no requirements to deploy the implementation anywhere else.
-* Include tests and instructions on how to run the tests.
+Technical Assessment Exercise for Gaggle
+Web Api for contacts management
+
+This project can be executed by following these instructions:
+* Clone the repo on your local machine: $ git clone https://github.com/wadigzon/candidate-technical-assessment-exercise.git
+* Go to the project directory: $ cd ./candidate-technical-assessment-exercise/contacts-api
+* Deploy/install the app: $ mvn install
+* Execute the Rest Api server: $ java -jar target/contacts-api-0.0.1-SNAPSHOT.jar
+* You can leave that console running (this is your server instance), to stop your server press CTRL+C in this window
+* Open another window (either postman or another console to test the running server) and this will be your client tester (see Test section)
 
 # Requirements
-Please complete the assignment using the following criteria. It is expected that you wil fork this repository in GitHub and share the link with us when complete.
+* Project was done using Java 11, so make sure you have that on your local machine and your JAVA_HOME variable is pointing towards that directory.
+* Using H2 in memory database, so once you close the server, all the data will be gone.
 
-Assume there is a database of your choice (can be relational or non-relational and the use of an embedded database is acceptable) with records that have the following fields:
-* Unique identifier
-* Name
+# Test
+* You can use curl command (either on windows/mac/linux) to test the App on a console
+* Note that curl supports single quote on console if you're on linux or mac, on windows use the escape (\") to put quotes within quotes
+* Test 1: Check Records
+  * At this point there should not be records on the DB
+  * do a simple getAllRecords (GET): $ curl -v http://localhost:8081/api/contacts
+  * Should see something like this right after:</br>
 
-Write the code for a Web Service that provides two possible operations for a client to call:
-* Get a contact by ID
-* Search for contacts by name
-  * **_Example_**: If the database contains the full name of "Bruce Wayne", then it should be reasonable for the function to return this result given any of the following search strings: "bru", "Bruce", "Wayne", "Bruce Wayne", etc.
-* Both the input and output of the operations should be formatted in JSON.
-* Unit tests for the provided code are written
-* **Bonus:** Leverage dependency injection
+    <p> *   Trying ::1... </br>
+    * TCP_NODELAY set </br>
+    * Connected to localhost (::1) port 8081 (#0) </br>
+    > GET /api/contacts HTTP/1.1 </br>
+    > Host: localhost:8081</br>
+    > User-Agent: curl/7.55.1</br>
+    > Accept: */*</br>
+    ></br>
+    < HTTP/1.1 200</br>
+    < Content-Type: application/json</br>
+    < Transfer-Encoding: chunked</br>
+    < Date: Thu, 12 Aug 2021 03:50:05 GMT</br>
+    <</br>
+    []* Connection #0 to host localhost left intact </br></p>
+*
